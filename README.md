@@ -11,6 +11,7 @@
  ![db2](https://github.com/azkalazkyaa/UAS-SISTER/blob/main/ASSETS/DB%202.jpeg)
   ![db3](https://github.com/azkalazkyaa/UAS-SISTER/blob/main/ASSETS/DB%203.jpeg)
 
+```
  These groups are read by MariaDB server.
  Use it for options that only the server (but not clients) should see
 
@@ -35,13 +36,11 @@ datadir         = /var/lib/mysql
 tmpdir          = /tmp
 lc-messages-dir = /usr/share/mysql
 skip-external-locking
-
-# Instead of skip-networking the default is now to listen only on
-# localhost which is more compatible and is not less secure.
+Instead of skip-networking the default is now to listen only on
+localhost which is more compatible and is not less secure.
 bind-address            = 0.0.0.0
 
-
-#  Fine Tuning
+Fine Tuning
 
 key_buffer_size         = 16M
 max_allowed_packet      = 16M
@@ -54,18 +53,17 @@ myisam_recover_options  = BACKUP
 #table_cache            = 64
 #thread_concurrency     = 10
 
-#
-# * Query Cache Configuration
-#
+
+ * Query Cache Configuration
+
 query_cache_limit       = 1M
 query_cache_size        = 16M
 
-#
-# * Logging and Replication
-#
-# Both location gets rotated by the cronjob.
-# Be aware that this log type is a performance killer.
-# As of 5.1 you can enable the log at runtime!
+
+ * Logging and Replication
+ Both location gets rotated by the cronjob.
+ Be aware that this log type is a performance killer.
+ As of 5.1 you can enable the log at runtime!
 #general_log_file        = /var/log/mysql/mysql.log
 #general_log             = 1
 #
@@ -146,6 +144,7 @@ collation-server      = utf8mb4_general_ci
   ![ci2](https://github.com/azkalazkyaa/UAS-SISTER/blob/main/ASSETS/Install%20code%20igniters%20dan%20dependencies%202.jpeg)
 ## app.conf.j2 untuk konfigurasi nginx code ingniter
   ![app.conf.j2](https://github.com/azkalazkyaa/UAS-SISTER/blob/main/ASSETS/app.confi.j2.jpeg)
+```
 
 
 
