@@ -1,12 +1,12 @@
 # UAS-SISTER
 
-## Ansible
+# Ansible
 
-  ## Create lxc 
+# Create lxc 
 
  ![lxc1](https://github.com/azkalazkyaa/UAS-SISTER/blob/main/ASSETS/LXC%20PADA%20ANSIBLE.jpeg)
  ![lxc2](https://github.com/azkalazkyaa/UAS-SISTER/blob/main/ASSETS/LXC%20PADA%20ANSIBLE%202.jpeg)
-## mariadb.yml ini untuk menginstall database mysql pada lxc server
+# mariadb.yml ini untuk menginstall database mysql pada lxc server ``kelompok15.local/phpmyadmin``
  ![db1](https://github.com/azkalazkyaa/UAS-SISTER/blob/main/ASSETS/DB%201.jpeg)
  ![db2](https://github.com/azkalazkyaa/UAS-SISTER/blob/main/ASSETS/DB%202.jpeg)
   ![db3](https://github.com/azkalazkyaa/UAS-SISTER/blob/main/ASSETS/DB%203.jpeg)
@@ -187,7 +187,7 @@ server {
 ## app.conf.j2 untuk konfigurasi nginx code ingniter
   ![app.conf.j2](https://github.com/azkalazkyaa/UAS-SISTER/blob/main/ASSETS/app.confi.j2.jpeg)
 
-# penginstallan wordprees
+# penginstallan wordprees `news.kelompok15.local`
 
 ## ansible untuk wordpress  
 ```
@@ -815,7 +815,7 @@ sudo mkdir -p wordpress /templates
         /** Sets up WordPress vars and included files. */
         require_once ABSPATH . 'wp-settings.php';
         ```
-#  Penginstalan Laravel
+# Penginstalan Laravel ``kelompok15.local`
 
 ## file penginstalan nano laravel.yml 
 
@@ -1502,7 +1502,7 @@ sudo mkdir -p wordpress /templates
  (Foto)
 
 
-# Penginstalan YII
+# Penginstalan YII ``kelompok15.local/product``
 
 ## file penginstalan 'nano yii.yml' 
   ---
