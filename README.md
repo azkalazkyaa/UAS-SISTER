@@ -869,77 +869,77 @@ sudo mkdir -p wordpress /templates
 
       
         ---
-        - name: delete apt chache
-        become: yes
-        become_user: root
-        become_method: su
-        command: rm -vf /var/lib/apt/lists/*
-
-        - name: Download and install Composer
-        shell: curl -sS https://getcomposer.org/installer | php
-        args:
-            chdir: /usr/src/
-            creates: /usr/local/bin/composer
-        become: yes
-
-        - name: Add Composer to global path
-        copy:
-            dest: /usr/local/bin/composer
-            group: root
-            mode: '0755'
-            owner: root
-            src: /usr/src/composer.phar
-            remote_src: yes
-        become: yes
-
-        - name: Ansible delete file create-project
-        file:
-            path: /var/www/html/laravel
-            state: absent
-
-        - name: composer create-project
-        shell: /usr/local/bin/composer create-project laravel/laravel /var/www/html/laravel --prefer-dist --no-interaction
-
-        - name: Copy .env.template
-        template:
-            src=templates/env.templates
-            dest=/var/www/html/laravel/.env
-
-        - name: composer
-        shell: cd /var/www/html/laravel; /usr/local/bin/composer install  --no-interaction
-
-        - name: key
-        shell: /usr/bin/php7.4 /var/www/html/laravel/artisan key:generate
-
-        - name: chmod
-        become: yes
-        become_user: root
-        become_method: su
-        command: chmod 777 -R /var/www/html/laravel/storage
-
-        - name: Copy lv.conf
-        template:
-            src=templates/lv.conf.j2
-            dest=/etc/nginx/sites-available/{{ domain }}
-        vars:
-            servername: '{{ domain }}'
-
-        - name: copy php7.conf
-        template:
-            src=templates/php7.conf.j2
-            dest=/etc/php/7.4/fpm/pool.d/www.conf
-
-        - name: Symlink lv.conf
-        command: ln -sfn /etc/nginx/sites-available/{{ domain }} /etc/nginx/sites-enabled/{{ domain }}
-        notify:
-            - restart nginx
-
-        - name: Write {{ domain }} to /etc/hosts
-        lineinfile:
-            dest: /etc/hosts
-            regexp: '.*{{ domain }}$'
-            line: "127.0.0.1 {{ domain }}"
-            state: present
+          - name: delete apt chache
+            become: yes
+            become_user: root
+            become_method: su
+            command: rm -vf /var/lib/apt/lists/*
+  
+          - name: Download and install Composer
+            shell: curl -sS https://getcomposer.org/installer | php
+            args:
+                chdir: /usr/src/
+                creates: /usr/local/bin/composer
+            become: yes
+  
+          - name: Add Composer to global path
+            copy:
+                dest: /usr/local/bin/composer
+                group: root
+                mode: '0755'
+                owner: root
+                src: /usr/src/composer.phar
+                remote_src: yes
+            become: yes
+  
+          - name: Ansible delete file create-project
+            file:
+                path: /var/www/html/laravel
+                state: absent
+  
+          - name: composer create-project
+            shell: /usr/local/bin/composer create-project laravel/laravel /var/www/html/laravel --prefer-dist --no-interaction
+    
+          - name: Copy .env.template
+            template:
+                src=templates/env.templates
+                dest=/var/www/html/laravel/.env
+    
+          - name: composer
+            shell: cd /var/www/html/laravel; /usr/local/bin/composer install  --no-interaction
+  
+          - name: key
+            shell: /usr/bin/php7.4 /var/www/html/laravel/artisan key:generate
+  
+          - name: chmod
+            become: yes
+            become_user: root
+            become_method: su
+            command: chmod 777 -R /var/www/html/laravel/storage
+    
+          - name: Copy lv.conf
+            template:
+                src=templates/lv.conf.j2
+                dest=/etc/nginx/sites-available/{{ domain }}
+            vars:
+                servername: '{{ domain }}'
+  
+          - name: copy php7.conf
+            template:
+                src=templates/php7.conf.j2
+                dest=/etc/php/7.4/fpm/pool.d/www.conf
+  
+          - name: Symlink lv.conf
+            command: ln -sfn /etc/nginx/sites-available/{{ domain }} /etc/nginx/sites-enabled/{{ domain }}
+            notify:
+                - restart nginx
+  
+          - name: Write {{ domain }} to /etc/hosts
+            lineinfile:
+                dest: /etc/hosts
+                regexp: '.*{{ domain }}$'
+                line: "127.0.0.1 {{ domain }}"
+                state: present
 
       
 
@@ -1504,162 +1504,158 @@ sudo mkdir -p wordpress /templates
 
 # Penginstalan YII
 
-## file penginstalan nano yii.yml 
+## file penginstalan 'nano yii.yml' 
+  ---
+    - hosts: lxc_php7_1Y
+      vars:
+        username: 'admin'
+        password: 'admin'
+        domain: 'lxc_php7_1Y.dev'
+      roles:
+        - yii
     
-    ---
-
-- hosts: lxc_php7_1Y
-  vars:
-    username: 'admin'
-    password: 'admin'
-    domain: 'lxc_php7_1Y.dev'
-  roles:
-    - yii
-
-- hosts: lxc_php7_2Y
-  vars:
-    username: 'admin'
-    password: 'admin'
-    domain: 'lxc_php7_2Y.dev'
-  roles:
-    - yii
-
-- hosts: lxc_php7_4Y
-  vars:
-    username: 'admin'
-    password: 'admin'
-    domain: 'lxc_php7_4Y.dev'
-  roles:
-    - yii
-
-- hosts: lxc_php7_5Y
-  vars:
-    username: 'admin'
-    password: 'admin'
-    domain: 'lxc_php7_5Y.dev'
-  roles:
-    - yii
-
-- hosts: lxc_php7_6Y
-  vars:
-    username: 'admin'
-    password: 'admin'
-    domain: 'lxc_php7_6Y.dev'
-  roles:
-    - yii
-
+    - hosts: lxc_php7_2Y
+      vars:
+        username: 'admin'
+        password: 'admin'
+        domain: 'lxc_php7_2Y.dev'
+      roles:
+        - yii
     
-
+    - hosts: lxc_php7_4Y
+      vars:
+        username: 'admin'
+        password: 'admin'
+        domain: 'lxc_php7_4Y.dev'
+      roles:
+        - yii
+    
+    - hosts: lxc_php7_5Y
+      vars:
+        username: 'admin'
+        password: 'admin'
+        domain: 'lxc_php7_5Y.dev'
+      roles:
+        - yii
+    
+    - hosts: lxc_php7_6Y
+      vars:
+        username: 'admin'
+        password: 'admin'
+        domain: 'lxc_php7_6Y.dev'
+      roles:
+        - yii
+    ```
+    
 ## folder yii   
-
-      
+    ```
       sudo mkdir -p yii /tasks
       sudo mkdir -p yii /handlers
       sudo mkdir -p yii /templates
-      
+    ```
 ### tasks/main.yml
-
-      
-      ---
-- name: delete apt cache
-  become: yes
-  become_user: root
-  become_method: su
-  command: rm -vf /var/lib/apt/lists/*
-
-- name: Download and install Composer
-  shell: curl -sS https://getcomposer.org/installer | php
-  args:
-    chdir: /usr/src/
-    creates: /usr/local/bin/composer
-  become: yes
-  register: composer_install_result
-  changed_when: composer_install_result.rc != 0
-
-- name: Add Composer to global path if installed
-  copy:
-    dest: /usr/local/bin/composer
-    group: root
-    mode: '0755'
-    owner: root
-    src: /usr/src/composer.phar
-    remote_src: yes
-  become: yes
-  when: composer_install_result.changed
-
-- name: Ensure /var/www/html/basic directory is absent
-  file:
-    path: /var/www/html/basic
-    state: absent
-  become: yes
-  ignore_errors: yes
-
-- name: Create directory /var/www/html/basic
-  file:
-    path: /var/www/html/basic
-    state: directory
-    owner: root
-    mode: '0755'
-  become: yes
-
-- name: Composer create-project Yii2 basic app
-  shell: >
-    COMPOSER_ALLOW_SUPERUSER=1 /usr/local/bin/composer create-project yiisoft/yii2-app-basic /var/www/html/basic --prefer-dist --no-interaction
-  become: yes
-  retries: 3
-  delay: 10
-
-- name: Set permissions for Composer
-  become: yes
-  become_user: root
-  become_method: su
-  command: chmod +x /usr/local/bin/composer
-
-- name: Install Composer dependencies
-  shell: >
-    cd /var/www/html/basic && COMPOSER_ALLOW_SUPERUSER=1 /usr/local/bin/composer install --no-interaction
-  become: yes
-
-- name: Copy yii.conf.j2
-  template:
-    src: templates/yii.conf.j2
-    dest: /etc/nginx/sites-available/{{ domain }}
-  vars:
-    servername: '{{ domain }}'
-
-- name: Install required packages
-  apt:
-    name:
-        - nginx-extras
-        - php7.4
-        - php7.4-fpm
-        - php7.4-mbstring
-        - php7.4-xml
-        - php7.4-mysql
-        - php7.4-curl
-        - curl
-        - zip
-        - unzip
-        - git
-    state: present
-
-- name: Symlink yii.conf
-  command: ln -sfn /etc/nginx/sites-available/{{ domain }} /etc/nginx/sites-enabled/{{ domain }}
-  notify:
-    - restart nginx
-
-- name: Write {{ domain }} to /etc/hosts
-  lineinfile:
-    dest: /etc/hosts
-    regexp: '.*{{ domain }}$'
-    line: "127.0.0.1 {{ domain }}"
-    state: present
+    ```
+          ---
+    - name: delete apt cache
+      become: yes
+      become_user: root
+      become_method: su
+      command: rm -vf /var/lib/apt/lists/*
+    
+    - name: Download and install Composer
+      shell: curl -sS https://getcomposer.org/installer | php
+      args:
+        chdir: /usr/src/
+        creates: /usr/local/bin/composer
+      become: yes
+      register: composer_install_result
+      changed_when: composer_install_result.rc != 0
+    
+    - name: Add Composer to global path if installed
+      copy:
+        dest: /usr/local/bin/composer
+        group: root
+        mode: '0755'
+        owner: root
+        src: /usr/src/composer.phar
+        remote_src: yes
+      become: yes
+      when: composer_install_result.changed
+    
+    - name: Ensure /var/www/html/basic directory is absent
+      file:
+        path: /var/www/html/basic
+        state: absent
+      become: yes
+      ignore_errors: yes
+    
+    - name: Create directory /var/www/html/basic
+      file:
+        path: /var/www/html/basic
+        state: directory
+        owner: root
+        mode: '0755'
+      become: yes
+    
+    - name: Composer create-project Yii2 basic app
+      shell: >
+        COMPOSER_ALLOW_SUPERUSER=1 /usr/local/bin/composer create-project yiisoft/yii2-app-basic /var/www/html/basic --prefer-dist --no-interaction
+      become: yes
+      retries: 3
+      delay: 10
+    
+    - name: Set permissions for Composer
+      become: yes
+      become_user: root
+      become_method: su
+      command: chmod +x /usr/local/bin/composer
+    
+    - name: Install Composer dependencies
+      shell: >
+        cd /var/www/html/basic && COMPOSER_ALLOW_SUPERUSER=1 /usr/local/bin/composer install --no-interaction
+      become: yes
+    
+    - name: Copy yii.conf.j2
+      template:
+        src: templates/yii.conf.j2
+        dest: /etc/nginx/sites-available/{{ domain }}
+      vars:
+        servername: '{{ domain }}'
+    
+    - name: Install required packages
+      apt:
+        name:
+            - nginx-extras
+            - php7.4
+            - php7.4-fpm
+            - php7.4-mbstring
+            - php7.4-xml
+            - php7.4-mysql
+            - php7.4-curl
+            - curl
+            - zip
+            - unzip
+            - git
+        state: present
+    
+    - name: Symlink yii.conf
+      command: ln -sfn /etc/nginx/sites-available/{{ domain }} /etc/nginx/sites-enabled/{{ domain }}
+      notify:
+        - restart nginx
+    
+    - name: Write {{ domain }} to /etc/hosts
+      lineinfile:
+        dest: /etc/hosts
+        regexp: '.*{{ domain }}$'
+        line: "127.0.0.1 {{ domain }}"
+        state: present
+    ```
 
       
 
 ## handler/main.yml
 
-      
+    ```
       ---
       - name: restart php
         become: yes
@@ -1672,7 +1668,7 @@ sudo mkdir -p wordpress /templates
         become_user: root
         become_method: su
         action: service name=nginx state=restarted
-      
+     ```
 
 ## templates/yii.conf.j2
 
