@@ -136,7 +136,9 @@ collation-server      = utf8mb4_general_ci
 # This group is only read by MariaDB servers, not by MySQL.
 # If you use the same .cnf file for MySQL and MariaDB,
 # you can put MariaDB-only options here
+
 [mariadb]
+```
   ## membuat hosts di mana agar ansible bisa mengakses lxc untuk penginstalan otomatis
   ![host1](https://github.com/azkalazkyaa/UAS-SISTER/blob/main/ASSETS/membuat%20host%20di%20ansible.jpeg)
   ## app.yml di mana ini menginstal Code Igniter
@@ -144,7 +146,7 @@ collation-server      = utf8mb4_general_ci
   ![ci2](https://github.com/azkalazkyaa/UAS-SISTER/blob/main/ASSETS/Install%20code%20igniters%20dan%20dependencies%202.jpeg)
 ## app.conf.j2 untuk konfigurasi nginx code ingniter
   ![app.conf.j2](https://github.com/azkalazkyaa/UAS-SISTER/blob/main/ASSETS/app.confi.j2.jpeg)
-```
+
 
 
 
