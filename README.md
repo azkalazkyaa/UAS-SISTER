@@ -1774,6 +1774,7 @@ sudo mkdir -p wordpress /templates
             }
         }
       
-    ![yii](https://github.com/azkalazkyaa/UAS-SISTER/blob/main/ASSETS/yiii.jpeg)
+  ### Hasil dari YII
+  ![yii](https://github.com/azkalazkyaa/UAS-SISTER/blob/main/ASSETS/yiii.jpeg)
 
  
