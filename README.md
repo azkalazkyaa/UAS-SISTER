@@ -1502,6 +1502,234 @@ sudo mkdir -p wordpress /templates
  (Foto)
 
 
+# Penginstalan YII
 
+## file penginstalan nano yii.yml 
+    
+    ---
+
+- hosts: lxc_php7_1Y
+  vars:
+    username: 'admin'
+    password: 'admin'
+    domain: 'lxc_php7_1Y.dev'
+  roles:
+    - yii
+
+- hosts: lxc_php7_2Y
+  vars:
+    username: 'admin'
+    password: 'admin'
+    domain: 'lxc_php7_2Y.dev'
+  roles:
+    - yii
+
+- hosts: lxc_php7_4Y
+  vars:
+    username: 'admin'
+    password: 'admin'
+    domain: 'lxc_php7_4Y.dev'
+  roles:
+    - yii
+
+- hosts: lxc_php7_5Y
+  vars:
+    username: 'admin'
+    password: 'admin'
+    domain: 'lxc_php7_5Y.dev'
+  roles:
+    - yii
+
+- hosts: lxc_php7_6Y
+  vars:
+    username: 'admin'
+    password: 'admin'
+    domain: 'lxc_php7_6Y.dev'
+  roles:
+    - yii
+
+    
+
+## folder yii   
+
+      
+      sudo mkdir -p yii /tasks
+      sudo mkdir -p yii /handlers
+      sudo mkdir -p yii /templates
+      
+### tasks/main.yml
+
+      
+      ---
+- name: delete apt cache
+  become: yes
+  become_user: root
+  become_method: su
+  command: rm -vf /var/lib/apt/lists/*
+
+- name: Download and install Composer
+  shell: curl -sS https://getcomposer.org/installer | php
+  args:
+    chdir: /usr/src/
+    creates: /usr/local/bin/composer
+  become: yes
+  register: composer_install_result
+  changed_when: composer_install_result.rc != 0
+
+- name: Add Composer to global path if installed
+  copy:
+    dest: /usr/local/bin/composer
+    group: root
+    mode: '0755'
+    owner: root
+    src: /usr/src/composer.phar
+    remote_src: yes
+  become: yes
+  when: composer_install_result.changed
+
+- name: Ensure /var/www/html/basic directory is absent
+  file:
+    path: /var/www/html/basic
+    state: absent
+  become: yes
+  ignore_errors: yes
+
+- name: Create directory /var/www/html/basic
+  file:
+    path: /var/www/html/basic
+    state: directory
+    owner: root
+    mode: '0755'
+  become: yes
+
+- name: Composer create-project Yii2 basic app
+  shell: >
+    COMPOSER_ALLOW_SUPERUSER=1 /usr/local/bin/composer create-project yiisoft/yii2-app-basic /var/www/html/basic --prefer-dist --no-interaction
+  become: yes
+  retries: 3
+  delay: 10
+
+- name: Set permissions for Composer
+  become: yes
+  become_user: root
+  become_method: su
+  command: chmod +x /usr/local/bin/composer
+
+- name: Install Composer dependencies
+  shell: >
+    cd /var/www/html/basic && COMPOSER_ALLOW_SUPERUSER=1 /usr/local/bin/composer install --no-interaction
+  become: yes
+
+- name: Copy yii.conf.j2
+  template:
+    src: templates/yii.conf.j2
+    dest: /etc/nginx/sites-available/{{ domain }}
+  vars:
+    servername: '{{ domain }}'
+
+- name: Install required packages
+  apt:
+    name:
+        - nginx-extras
+        - php7.4
+        - php7.4-fpm
+        - php7.4-mbstring
+        - php7.4-xml
+        - php7.4-mysql
+        - php7.4-curl
+        - curl
+        - zip
+        - unzip
+        - git
+    state: present
+
+- name: Symlink yii.conf
+  command: ln -sfn /etc/nginx/sites-available/{{ domain }} /etc/nginx/sites-enabled/{{ domain }}
+  notify:
+    - restart nginx
+
+- name: Write {{ domain }} to /etc/hosts
+  lineinfile:
+    dest: /etc/hosts
+    regexp: '.*{{ domain }}$'
+    line: "127.0.0.1 {{ domain }}"
+    state: present
+
+      
+
+## handler/main.yml
+
+      
+      ---
+      - name: restart php
+        become: yes
+        become_user: root
+        become_method: su
+        action: service name=php7.4-fpm state=restarted
+      
+      - name: restart nginx
+        become: yes
+        become_user: root
+        become_method: su
+        action: service name=nginx state=restarted
+      
+
+## templates/yii.conf.j2
+
+      
+        server {
+            set $host_path "/var/www/html/basic";
+
+            server_name  {{ domain }};
+            root   $host_path/web;
+            set $yii_bootstrap "index.php";
+
+            # Access log configuration
+            #access_log /var/log/nginx/{{ domain }}_access.log main;
+
+
+            charset utf-8;
+
+            location / {
+                index  index.html $yii_bootstrap;
+                try_files $uri $uri/ /$yii_bootstrap?$args;
+            }
+
+            location ~ ^/(protected|framework|themes/\w+/views) {
+                deny  all;
+            }
+
+            #avoid processing of calls to unexisting static files by yii
+            location ~ \.(js|css|png|jpg|gif|swf|ico|pdf|mov|fla|zip|rar)$ {
+                try_files $uri =404;
+            }
+
+            # pass the PHP scripts to FastCGI server listening on UNIX socket
+            location ~ \.php {
+                fastcgi_split_path_info  ^(.+\.php)(.*)$;
+
+                #let yii catch the calls to unexising PHP files
+                set $fsn /$yii_bootstrap;
+                if (-f $document_root$fastcgi_script_name){
+                    set $fsn $fastcgi_script_name;
+                }
+            fastcgi_pass   unix:/run/php/php7.4-fpm.sock;
+                include fastcgi_params;
+                fastcgi_param  SCRIPT_FILENAME  $document_root$fsn;
+
+            #PATH_INFO and PATH_TRANSLATED can be omitted, but RFC 3875 specifies them for CGI
+                fastcgi_param  PATH_INFO        $fastcgi_path_info;
+                fastcgi_param  PATH_TRANSLATED  $document_root$fsn;
+            }
+
+            # prevent nginx from serving dotfiles (.htaccess, .svn, .git, etc.)
+            location ~ /\. {
+                deny all;
+                access_log off;
+                log_not_found off;
+            }
+        }
+      
+    ![yii](/ASSETS/yii.png)
 
  
