@@ -1546,7 +1546,8 @@ sudo mkdir -p wordpress /templates
           become_method: su
           action: service name=nginx state=restarted
           
- (Foto)
+ ### hasil laravel 
+ ![laravel](https://github.com/azkalazkyaa/UAS-SISTER/blob/main/ASSETS/laravel.jpeg)
 
 
 # Penginstalan YII ``kelompok15.local/product``
@@ -1773,7 +1774,6 @@ sudo mkdir -p wordpress /templates
             }
         }
       
-    ![yii](/ASSETS/yii.png)
+    ![yii](https://github.com/azkalazkyaa/UAS-SISTER/blob/main/ASSETS/yiii.jpeg))
 
- # Note foto hasil nya masih proses pak waktunya mepet soalnya hehe
  
