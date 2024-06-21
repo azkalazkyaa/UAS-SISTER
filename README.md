@@ -1779,8 +1779,7 @@ sudo mkdir -p wordpress /templates
 
 
   # Host utama setting nginx cd /etc/nginx/sites-available dan file nama sudo nano kelompok12.local
-
-  
+```
   upstream ci {
     server 10.0.3.144;
       server 10.0.3.41;
@@ -1845,7 +1844,6 @@ sudo mkdir -p wordpress /templates
         proxy_pass http://laravel;
     }
   }
-
   server {
           listen 80;
           listen [::]:80;
@@ -1860,7 +1858,9 @@ sudo mkdir -p wordpress /templates
                   proxy_pass http://wp;
           }
   }
+  ```
   
-  
+# Jmeter
 
+otw
  
