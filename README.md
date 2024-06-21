@@ -291,7 +291,7 @@ sudo mkdir -p wordpress /templates
 
   # Folder templates
 
-  ## php7.conf
+  ## php7.conf.j2
 
   ```  
         ; Start a new pool named 'www'.
@@ -680,7 +680,7 @@ sudo mkdir -p wordpress /templates
         ;php_admin_value[memory_limit] = 32M
         
 ```
-  ## wordpress.conf
+  ## wordpress.conf.j2
 
         ```
         server {
@@ -714,7 +714,7 @@ sudo mkdir -p wordpress /templates
         }
         
 
-  ### wp.conf 
+  ### wp.conf.j2
 
       ```  
         <?php
