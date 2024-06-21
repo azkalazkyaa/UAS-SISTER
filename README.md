@@ -1765,4 +1765,5 @@ sudo mkdir -p wordpress /templates
       
     ![yii](/ASSETS/yii.png)
 
+ # Note foto hasil nya masih proses pak waktunya mepet soalnya hehe
  
