@@ -1777,4 +1777,90 @@ sudo mkdir -p wordpress /templates
   ### Hasil dari YII
   ![yii](https://github.com/azkalazkyaa/UAS-SISTER/blob/main/ASSETS/yiii.jpeg)
 
+
+  # Host utama setting nginx cd /etc/nginx/sites-available dan file nama sudo nano kelompok12.local
+
+  
+  upstream ci {
+    server 10.0.3.144;
+      server 10.0.3.41;
+  }
+
+  upstream laravel {
+      least_conn;
+      server 10.0.3.137;
+      server 10.0.3.200;
+      server 10.0.3.104;
+      server 10.0.3.176;
+  }
+
+  upstream mariadb {
+      server 10.0.3.46;
+
+  }
+
+  upstream yii {
+      server 10.0.3.251 weight=3;
+      server 10.0.3.137 weight=2;
+      server 10.0.3.104 weight=4;
+      server 10.0.3.176 weight=1;
+  }
+
+  upstream wp{
+      ip_hash;
+      server 10.0.3.251;
+      server 10.0.3.137;
+      server 10.0.3.104;
+      server 10.0.3.202;
+  }
+
+  
+  server {
+    listen 80;
+    listen [::]:80;
+
+    server_name kelompok15.local;
+
+    root /var/www/html;
+    index index.html;
+
+    location /product {
+        # Jika ada aplikasi web di balik proxy_pass
+        rewrite /product/?(.*)$ /$1 break;
+        proxy_pass http://yii;
+    }
+
+    location /app {
+        rewrite /app/?(.*)$ /$1 break;
+        proxy_pass http://ci;
+    }
+
+    location /phpmyadmin {
+        rewrite /phpmyadmin/?(.*)$ /$1 break;
+        proxy_pass http://mariadb;
+    }
+
+    location / {
+        rewrite /?(.*)$ /$1 break;
+        proxy_pass http://laravel;
+    }
+  }
+
+  server {
+          listen 80;
+          listen [::]:80;
+  
+          server_name news.kelompok15.local;
+  
+          root /var/www/html;
+          index index.html;
+  
+          location / {
+                  rewrite /?(.*)$ /$1 break;
+                  proxy_pass http://wp;
+          }
+  }
+  
+  
+
  
