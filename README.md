@@ -139,7 +139,9 @@ collation-server      = utf8mb4_general_ci
 
 [mariadb]
 ```
-
+### hasil mariadb 
+![db1](https://github.com/azkalazkyaa/UAS-SISTER/blob/main/ASSETS/db1.png)
+![db2](https://github.com/azkalazkyaa/UAS-SISTER/blob/main/ASSETS/db2.png)
 ## ini file sites.conf.j2
 ```
 server {
@@ -187,6 +189,9 @@ server {
   ![ci2](https://github.com/azkalazkyaa/UAS-SISTER/blob/main/ASSETS/Install%20code%20igniters%20dan%20dependencies%202.jpeg)
 ## app.conf.j2 untuk konfigurasi nginx code ingniter
   ![app.conf.j2](https://github.com/azkalazkyaa/UAS-SISTER/blob/main/ASSETS/app.confi.j2.jpeg)
+
+### hasil code ingniter
+  ![ci](https://github.com/azkalazkyaa/UAS-SISTER/blob/main/ASSETS/cii.png)
 
 # penginstallan wordprees `news.kelompok15.local`
 
@@ -852,6 +857,11 @@ sudo mkdir -p wordpress /templates
         /** Sets up WordPress vars and included files. */
         require_once ABSPATH . 'wp-settings.php';
         ```
+
+### hasil wordprees
+  ![wp1](https://github.com/azkalazkyaa/UAS-SISTER/blob/main/ASSETS/wp1.png)
+  ![wp2](https://github.com/azkalazkyaa/UAS-SISTER/blob/main/ASSETS/wp2.png)
+
 # Penginstalan Laravel `kelompok15.local`
 
 ## file penginstalan nano laravel.yml 
