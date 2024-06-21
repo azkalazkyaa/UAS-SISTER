@@ -181,13 +181,50 @@ server {
 
   ## membuat hosts di mana agar ansible bisa mengakses lxc untuk penginstalan otomatis
   ![host1](https://github.com/azkalazkyaa/UAS-SISTER/blob/main/ASSETS/membuat%20host%20di%20ansible.jpeg)
-  ## app.yml di mana ini menginstal Code Igniter
+# Penginstalan CI ``kelompok15.local/app``
+## app.yml
   ![ci1](https://github.com/azkalazkyaa/UAS-SISTER/blob/main/ASSETS/Install%20code%20igniters%20dan%20dependencies%201.jpeg)
   ![ci2](https://github.com/azkalazkyaa/UAS-SISTER/blob/main/ASSETS/Install%20code%20igniters%20dan%20dependencies%202.jpeg)
 ## app.conf.j2 untuk konfigurasi nginx code ingniter
   ![app.conf.j2](https://github.com/azkalazkyaa/UAS-SISTER/blob/main/ASSETS/app.confi.j2.jpeg)
 
 # penginstallan wordprees `news.kelompok15.local`
+
+## file `nano wp.yml`
+ ```
+---
+- hosts: lxc_php7_1W
+  vars:
+    username: 'admin'
+    password: 'admin'
+    domain: 'lxc_php7_1W.dev'
+  roles:
+    - wp
+
+- hosts: lxc_php7_2W
+  vars:
+    username: 'admin'
+    password: 'admin'
+    domain: 'lxc_php7_2W.dev'
+  roles:
+    - wp
+
+- hosts: lxc_php7_4W
+  vars:
+    username: 'admin'
+    password: 'admin'
+    domain: 'lxc_php7_4W.dev'
+  roles:
+    - wp
+
+- hosts: lxc_php7_6W
+  vars:
+    username: 'admin'
+    password: 'admin'
+    domain: 'lxc_php7_6W.dev'
+  roles:
+    - wp
+ ```
 
 ## ansible untuk wordpress  
 ```
@@ -815,7 +852,7 @@ sudo mkdir -p wordpress /templates
         /** Sets up WordPress vars and included files. */
         require_once ABSPATH . 'wp-settings.php';
         ```
-# Penginstalan Laravel ``kelompok15.local`
+# Penginstalan Laravel `kelompok15.local`
 
 ## file penginstalan nano laravel.yml 
 
